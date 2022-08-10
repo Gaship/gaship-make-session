@@ -10,6 +10,7 @@ import java.security.cert.CertificateException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -24,6 +25,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author 유호철, 조재철
  * @since 1.0
  */
+@Profile("redis")
 @Configuration
 @ConfigurationProperties(prefix = "redis")
 public class RedisConfig {
@@ -104,7 +106,7 @@ public class RedisConfig {
      * @return RedisTemplate을 반환.
      */
     @Bean
-    public RedisTemplate<byte[], byte[]> redisTemplate() {
+    public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory(null));
         redisTemplate.setKeySerializer(new StringRedisSerializer());

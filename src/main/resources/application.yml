@@ -5,9 +5,6 @@ secure-key-manager:
   local-key: gaship
 
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   jpa:
     show-sql: true
 
@@ -17,9 +14,22 @@ datasource:
   username: eggplant
   password: e55472d5d7ea4bbdb6f3149e1ed597e5
 
+---
+
+spring:
+  config:
+    activate:
+      on-profile: rdb
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: redis
+
 redis:
   host: a93c53427dd84868bdc3402d94270bf4
   port: 6379
   password: c61df19084544df5a11f5c9a57abb6c2
   database: 24
-
