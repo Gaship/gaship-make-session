@@ -1,5 +1,6 @@
 package com.nhnacademy.makesession.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nhnacademy.makesession.dto.LoginRequestDto;
 import com.nhnacademy.makesession.service.AuthService;
 import com.nhnacademy.makesession.service.impl.SessionHolder;
@@ -37,7 +38,8 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public String login(@ModelAttribute LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public String login(@ModelAttribute LoginRequestDto loginRequestDto,
+                        HttpServletResponse response) throws JsonProcessingException {
 
         if (!authService.login(loginRequestDto)) {
             return "login";
@@ -52,7 +54,7 @@ public class AuthController {
 
         sessionManager.setCreationTime(System.currentTimeMillis());
 
-        sessionManager.setAttribute("id", loginRequestDto.getUsername());
+        sessionManager.setAttribute("memver", loginRequestDto.getUsername());
 
         return "redirect:/";
     }
