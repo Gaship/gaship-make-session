@@ -10,8 +10,6 @@ public interface SessionManager {
 
     String SESSION_COOKIE_NAME = "gashipSessionId";
 
-    void createSession();
-
     void setAttribute(String key, Object value);
 
     Object getAttribute(String key);
@@ -30,6 +28,13 @@ public interface SessionManager {
 //    long getLastAccessedTime()  //웹 브라우저의 요청이 마지막으로 시도된 시간을 long 형 ms 값으로 반환
 //    ;
 
+    void setCreationTime(long createtionTIme);
+
+    long getLastAccessedTime()  //웹 브라우저의 요청이 마지막으로 시도된 시간을 long 형 ms 값으로 반환
+    ;
+
+    void setLastAccessedTime(long currentTime);
+
     void setMaxInactiveInterval(int second)  //세션을 유지할 시간을 초단위로 설정 합니다.
     ;
 
@@ -37,4 +42,8 @@ public interface SessionManager {
     ;
 
     Cookie findCookie(String cookieName);
+
+    void removeCookie(Cookie cookie);
+
+    void resetSessionExpireTime(String sessionId);
 }

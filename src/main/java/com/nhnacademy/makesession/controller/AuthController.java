@@ -2,7 +2,11 @@ package com.nhnacademy.makesession.controller;
 
 import com.nhnacademy.makesession.dto.LoginRequestDto;
 import com.nhnacademy.makesession.service.AuthService;
+import com.nhnacademy.makesession.service.impl.SessionHolder;
 import com.nhnacademy.makesession.session.SessionManager;
+import java.util.UUID;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,15 +37,29 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public String login(@ModelAttribute LoginRequestDto loginRequestDto) {
+    public String login(@ModelAttribute LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
         if (!authService.login(loginRequestDto)) {
             return "login";
         }
 
-        sessionManager.createSession();
+        Cookie cookie = new Cookie("gashipSessionId", UUID.randomUUID().toString());
 
-        sessionManager.setAttribute("sessionId", loginRequestDto.getUsername());
+        response.addCookie(cookie);
+
+        //세션 쿠키 만듬
+        SessionHolder.setSessionId(cookie.getValue());
+
+        sessionManager.setCreationTime(System.currentTimeMillis());
+
+        sessionManager.setAttribute("id", loginRequestDto.getUsername());
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/logout")
+    public String logout() {
+        sessionManager.invalidate();
 
         return "redirect:/";
     }
