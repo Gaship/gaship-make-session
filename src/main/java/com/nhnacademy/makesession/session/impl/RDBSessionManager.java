@@ -36,7 +36,7 @@ public class RDBSessionManager implements SessionManager {
 
     private final SessionMapRepository mapRepository;
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private int sessionTimeoutSecond = 30 * 2;
+    private int sessionTimeoutSecond = 30 * 60;
     private long sessionCreationTime;
 
     private long sessionFinalRequestTime;
