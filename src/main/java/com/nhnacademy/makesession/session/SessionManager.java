@@ -1,5 +1,6 @@
 package com.nhnacademy.makesession.session;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javax.servlet.http.Cookie;
 
 /**
@@ -10,9 +11,9 @@ public interface SessionManager {
 
     String SESSION_COOKIE_NAME = "gashipSessionId";
 
-    void setAttribute(String key, Object value);
+    void setAttribute(String key, Object value) throws JsonProcessingException;
 
-    Object getAttribute(String key);
+    Object getAttribute(String key) throws JsonProcessingException;
 
     void removeAttribute(String key);
 
